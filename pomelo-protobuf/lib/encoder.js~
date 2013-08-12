@@ -110,11 +110,13 @@ function encodeProp(value, type, offset, buffer, protos){
 
 	switch(type){
 		case 'uInt32':
+                case 'int32' :
+                case 'int64' :
 			offset = writeBytes(buffer, offset, codec.encodeUInt32(value));
 		break;
-		case 'int32' :
+//		case 'int32' :
 		case 'sInt32':
-                case 'int64' :
+//              case 'int64' :
 			offset = writeBytes(buffer, offset, codec.encodeSInt32(value));
 		break;
 		case 'float':
@@ -159,10 +161,12 @@ function encodeProp(value, type, offset, buffer, protos){
  */
 function encodeArray(array, proto, offset, buffer, protos){
 	var i = 0;
+        console.log("proto.type=%s,proto.tag=%s",proto.type,proto.tag);
 	if(util.isSimpleType(proto.type)){
-		offset = writeBytes(buffer, offset, encodeTag(proto.type, proto.tag));
-		offset = writeBytes(buffer, offset, codec.encodeUInt32(array.length));
+		//offset = writeBytes(buffer, offset, encodeTag(proto.type, proto.tag));
+		//offset = writeBytes(buffer, offset, codec.encodeUInt32(array.length));
 		for(i = 0; i < array.length; i++){
+                        offset = writeBytes(buffer, offset, encodeTag(proto.type, proto.tag));
 			offset = encodeProp(array[i], proto.type, offset, buffer);
 		}
 	}else{

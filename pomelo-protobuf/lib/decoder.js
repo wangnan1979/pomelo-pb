@@ -45,6 +45,7 @@ function decodeMsg(msg, protos, length){
 				if(!msg[name]){
 					msg[name] = [];
 				}
+                                //console.log("decodeMsg_",name);
 				decodeArray(msg[name], protos[name].type, protos);
 			break;
 		}
@@ -120,11 +121,11 @@ function decodeProp(type, protos){
 
 function decodeArray(array, type, protos){
 	if(util.isSimpleType(type)){
-		var length = codec.decodeUInt32(getBytes());
+		//var length = codec.decodeUInt32(getBytes());
 
-		for(var i = 0; i < length; i++){
-			array.push(decodeProp(type));
-		}
+		//for(var i = 0; i < length; i++){
+			array.push(decodeProp(type, protos));
+		//}
 	}else{
 		array.push(decodeProp(type, protos));
 	}

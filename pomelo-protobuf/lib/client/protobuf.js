@@ -425,9 +425,10 @@
     var i = 0;
 
     if(util.isSimpleType(proto.type)){
-      offset = writeBytes(buffer, offset, encodeTag(proto.type, proto.tag));
-      offset = writeBytes(buffer, offset, codec.encodeUInt32(array.length));
+      //offset = writeBytes(buffer, offset, encodeTag(proto.type, proto.tag));  //del
+      //offset = writeBytes(buffer, offset, codec.encodeUInt32(array.length));  //del
       for(i = 0; i < array.length; i++){
+        offset = writeBytes(buffer, offset, encodeTag(proto.type, proto.tag));  //add:
         offset = encodeProp(array[i], proto.type, offset, buffer);
       }
     }else{
@@ -582,11 +583,11 @@
 
   function decodeArray(array, type, protos){
     if(util.isSimpleType(type)){
-      var length = codec.decodeUInt32(getBytes());
+//      var length = codec.decodeUInt32(getBytes());
 
-      for(var i = 0; i < length; i++){
-        array.push(decodeProp(type));
-      }
+//      for(var i = 0; i < length; i++){
+        array.push(decodeProp(type, protos));
+//      }
     }else{
       array.push(decodeProp(type, protos));
     }

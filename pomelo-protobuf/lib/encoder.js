@@ -161,10 +161,12 @@ function encodeProp(value, type, offset, buffer, protos){
  */
 function encodeArray(array, proto, offset, buffer, protos){
 	var i = 0;
+        console.log("proto.type=%s,proto.tag=%s",proto.type,proto.tag);
 	if(util.isSimpleType(proto.type)){
-		offset = writeBytes(buffer, offset, encodeTag(proto.type, proto.tag));
-		offset = writeBytes(buffer, offset, codec.encodeUInt32(array.length));
+		//offset = writeBytes(buffer, offset, encodeTag(proto.type, proto.tag));    //del
+		//offset = writeBytes(buffer, offset, codec.encodeUInt32(array.length));    //del
 		for(i = 0; i < array.length; i++){
+                        offset = writeBytes(buffer, offset, encodeTag(proto.type, proto.tag));  //add:只有这样才能和google-pb协议编码格式一致
 			offset = encodeProp(array[i], proto.type, offset, buffer);
 		}
 	}else{
